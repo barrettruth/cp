@@ -1,0 +1,86 @@
+#include <bits/stdc++.h> // {{{
+
+#include <iostream>
+#include <limits>
+
+#include <version>
+#ifdef __cpp_lib_ranges_enumerate
+#include <ranges>
+namespace rv = std::views;
+namespace rs = std::ranges;
+#endif
+
+#pragma GCC optimize("O2,unroll-loops")
+#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+
+using namespace std;
+
+using i32 = int32_t;
+using u32 = uint32_t;
+using i64 = int64_t;
+using u64 = uint64_t;
+using f64 = double;
+using f128 = long double;
+
+#if __cplusplus >= 202002L
+template <typename T> constexpr T MIN = std::numeric_limits<T>::min();
+
+template <typename T> constexpr T MAX = std::numeric_limits<T>::max();
+#endif
+
+#ifdef LOCAL
+#define db(...) std::print(__VA_ARGS__)
+#define dbln(...) std::println(__VA_ARGS__)
+#else
+#define db(...)
+#define dbln(...)
+#endif
+//  }}}
+
+void solve() {
+  u32 n;
+  cin >> n;
+  vector<u32> a(n);
+  for (auto &e : a)
+    cin >> e;
+
+  u32 i = 0;
+  while (i < n && a[i] == n - i) {
+    ++i;
+  }
+
+  if (i != n) {
+    u32 j = i + 1;
+    while (a[j] != n - i) {
+      ++j;
+    }
+
+    for (u32 k = i; k <= (i + j) / 2; ++k) {
+      swap(a[k], a[j - (k - i)]);
+    }
+  }
+
+  for (u32 i = 0; i < n; ++i) {
+    print("{}{}", a[i], " \n"[i == n - 1]);
+  }
+}
+
+int main() { // {{{
+  std::cin.exceptions(std::cin.failbit);
+#ifdef LOCAL
+  std::cerr.rdbuf(std::cout.rdbuf());
+  std::cout.setf(std::ios::unitbuf);
+  std::cerr.setf(std::ios::unitbuf);
+#else
+  std::cin.tie(nullptr)->sync_with_stdio(false);
+#endif
+
+  u32 t;
+  cin >> t;
+
+  for (u32 i = 0; i < t; ++i) {
+    solve();
+  }
+} // }}}
+
+// vim: set foldmethod=manual foldmarker={{{,}}}
