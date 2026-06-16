@@ -1,8 +1,0 @@
-j.cc: In function ‘void solve()’:
-j.cc:72:3: error: ‘aknf’ was not declared in this scope
-   72 |   aknf;kdsafkjadsfjadsfj
-      |   ^~~~
-j.cc:72:8: error: ‘kdsafkjadsfjadsfj’ was not declared in this scope
-   72 |   aknf;kdsafkjadsfjadsfj
-      |        ^~~~~~~~~~~~~~~~~
-zsh:1: permission denied: /tmp/tmp.yMxI36SPlf

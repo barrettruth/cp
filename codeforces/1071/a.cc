@@ -37,7 +37,7 @@ constexpr T MAX = std::numeric_limits<T>::max();
 //  }}}
 
 void solve() {
-  
+  std::cout << "hi\n";
 }
 
 int main() {  // {{{
