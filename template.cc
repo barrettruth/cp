@@ -20,11 +20,9 @@ using f64 = double;
 using f128 = long double;
 
 #if __cplusplus >= 202002L
-template <typename T>
-constexpr T MIN = std::numeric_limits<T>::min();
+template <typename T> constexpr T MIN = std::numeric_limits<T>::min();
 
-template <typename T>
-constexpr T MAX = std::numeric_limits<T>::max();
+template <typename T> constexpr T MAX = std::numeric_limits<T>::max();
 #endif
 
 #ifdef LOCAL
@@ -37,6 +35,7 @@ constexpr T MAX = std::numeric_limits<T>::max();
 // }}}
 
 void solve() {
+  
 }
 
 int main() { // {{{
