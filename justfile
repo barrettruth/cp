@@ -8,11 +8,13 @@ run file:
       echo "> {{cxx}} {{common_flags}} {{fast_flags}} {{file}} -o ${bin}"; \
       {{cxx}} {{common_flags}} {{fast_flags}} {{file}} -o "${bin}" && \
       echo && echo "> ./${bin} < ${stem}.in" && \
-      "./${bin}" < "${stem}.in"
+      "./${bin}" < "${stem}.in"; code=$?; \
+      echo && echo "= exit ${code}"; exit "${code}"
 
 debug file:
     @cd "{{invocation_directory()}}"; stem="{{file}}"; stem="${stem%.cc}"; bin="${stem}.debug"; \
       echo "> {{cxx}} {{common_flags}} {{debug_flags}} {{file}} -o ${bin}"; \
       {{cxx}} {{common_flags}} {{debug_flags}} {{file}} -o "${bin}" && \
       echo && echo "> ./${bin} < ${stem}.in" && \
-      "./${bin}" < "${stem}.in"
+      "./${bin}" < "${stem}.in"; code=$?; \
+      echo && echo "= exit ${code}"; exit "${code}"
