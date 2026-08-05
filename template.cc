@@ -1,14 +1,57 @@
-#include <bits/stdc++.h> // {{{
+#include <version> // {{{
 
-#include <version>
-#ifdef __cpp_lib_ranges_enumerate
+#include <algorithm>
+#include <array>
+#include <bit>
+#include <bitset>
+#include <cassert>
+#include <cctype>
+#include <chrono>
+#include <climits>
+#include <cmath>
+#include <complex>
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
+#include <deque>
+#include <format>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <map>
+#include <numbers>
+#include <numeric>
+#include <optional>
+#include <print>
+#include <queue>
+#include <random>
+#include <set>
+#include <span>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <string_view>
+#include <tuple>
+#include <type_traits>
+#include <unordered_map>
+#include <unordered_set>
+#include <utility>
+#include <vector>
+
+#if __has_include(<ranges>)
 #include <ranges>
 namespace rv = std::views;
 namespace rs = std::ranges;
 #endif
 
+#if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC optimize("O2,unroll-loops")
+#if defined(__x86_64__) || defined(__i386__)
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+#endif
+#endif
 
 using namespace std;
 
