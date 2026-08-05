@@ -21,8 +21,11 @@ appropriate.
 
 ## Development
 
-This repo does not define a shared development shell. Use the compiler or
-tooling required by the affected solution.
+This repo defines a Nix development shell that pins the compiler to the version
+used by the judges. Run `nix develop`, or let `direnv` load it automatically.
+
+Solutions are built and run with `just run <file>`, which compiles `<file>` and
+feeds it the matching `.in`. Use `just debug <file>` for a sanitiser build.
 
 ## Checks
 
