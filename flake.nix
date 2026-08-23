@@ -19,8 +19,8 @@
         default = (pkgs.mkShell.override { stdenv = pkgs.gcc14Stdenv; }) {
           packages = [
             pkgs.just
-            pkgs.clang-tools
             pkgs.coreutils
+            pkgs.python313
           ]
           ++ pkgs.lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.gdb;
         };
