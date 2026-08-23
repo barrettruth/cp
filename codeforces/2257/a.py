@@ -10,7 +10,7 @@ from string import ascii_lowercase, ascii_uppercase
 
 input = sys.stdin.readline
 
-sys.setrecursionlimit(1 << 20)
+sys.setrecursionlimit(10**4)
 
 
 def db(*args):
