@@ -11,12 +11,9 @@ run file:
     @cd "{{invocation_directory()}}"; stem="{{file}}"; \
       case "{{file}}" in \
       *.cc) stem="${stem%.cc}"; bin="${stem}.run"; \
-        echo "> {{cxx}} {{common_flags}} {{fast_flags}} {{file}} -o ${bin}"; \
         {{cxx}} {{common_flags}} {{fast_flags}} {{file}} -o "${bin}" && \
-        echo && echo "> timeout {{run_timeout}} ./${bin} < ${stem}.in" && \
         timeout {{run_timeout}} "./${bin}" < "${stem}.in";; \
       *.py) stem="${stem%.py}"; \
-        echo "> timeout {{run_timeout}} {{python}} {{file}} < ${stem}.in"; \
         timeout {{run_timeout}} {{python}} "{{file}}" < "${stem}.in";; \
       *) echo "error: {{file}}: expected a .cc or .py file" >&2; exit 2;; \
       esac
@@ -25,12 +22,9 @@ debug file:
     @cd "{{invocation_directory()}}"; stem="{{file}}"; \
       case "{{file}}" in \
       *.cc) stem="${stem%.cc}"; bin="${stem}.debug"; \
-        echo "> {{debug_cxx}} {{common_flags}} {{debug_flags}} {{file}} -o ${bin}"; \
         {{debug_cxx}} {{common_flags}} {{debug_flags}} {{file}} -o "${bin}" && \
-        echo && echo "> timeout {{run_timeout}} ./${bin} < ${stem}.in" && \
         timeout {{run_timeout}} "./${bin}" < "${stem}.in";; \
       *.py) stem="${stem%.py}"; \
-        echo "> timeout {{run_timeout}} {{python}} -X dev {{file}} < ${stem}.in"; \
         timeout {{run_timeout}} {{python}} -X dev "{{file}}" < "${stem}.in";; \
       *) echo "error: {{file}}: expected a .cc or .py file" >&2; exit 2;; \
       esac
