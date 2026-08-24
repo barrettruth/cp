@@ -19,8 +19,7 @@ run file:
         echo "> timeout {{run_timeout}} {{python}} {{file}} < ${stem}.in"; \
         timeout {{run_timeout}} {{python}} "{{file}}" < "${stem}.in";; \
       *) echo "error: {{file}}: expected a .cc or .py file" >&2; exit 2;; \
-      esac; code=$?; \
-      echo && echo "= exit ${code}"; exit "${code}"
+      esac
 
 debug file:
     @cd "{{invocation_directory()}}"; stem="{{file}}"; \
@@ -34,5 +33,4 @@ debug file:
         echo "> timeout {{run_timeout}} {{python}} -X dev {{file}} < ${stem}.in"; \
         timeout {{run_timeout}} {{python}} -X dev "{{file}}" < "${stem}.in";; \
       *) echo "error: {{file}}: expected a .cc or .py file" >&2; exit 2;; \
-      esac; code=$?; \
-      echo && echo "= exit ${code}"; exit "${code}"
+      esac
