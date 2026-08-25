@@ -8,8 +8,6 @@ from itertools import accumulate, combinations, permutations, product
 from math import comb, gcd, inf, isqrt, lcm, perm
 from string import ascii_lowercase, ascii_uppercase
 
-input = sys.stdin.readline
-
 sys.setrecursionlimit(10**4)
 
 
