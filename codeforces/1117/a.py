@@ -1,4 +1,5 @@
 # {{{
+
 import sys
 from bisect import bisect_left, bisect_right, insort
 from collections import Counter, defaultdict, deque
@@ -27,6 +28,7 @@ def solve():
     for _ in range(m):
         if not set(input().strip().lower()) <= first:
             ok = False
+
     print("YES" if ok else "NO")
 
 
