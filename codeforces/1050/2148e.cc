@@ -60,33 +60,35 @@ template <typename T> using vec = std::vector<T>;
 void solve() {
   u32 n, k;
   cin >> n >> k;
+
   vec<u32> a(n);
-  vec<u32> F(n + 1, 0);
+  vec<u32> cnt(n + 1, 0);
   for (u32 i = 0; i < n; ++i) {
     cin >> a[i];
-    ++F[a[i]];
+    ++cnt[a[i]];
   }
 
-  for (auto &f : F) {
-    if (f % k) {
-      println("0");
+  for (auto &c : cnt) {
+    if (c % k) {
+      cout << "0\n";
       return;
     }
   }
 
+  unordered_map<u32, u32> f;
+
   u64 ans = 0;
-  map<u32, u32> f;
 
   for (u32 l = 0, r = 0; r < n; ++r) {
     ++f[a[r]];
-    while (f[a[r]] * k > F[a[r]]) {
+    while (f[a[r]] * k > cnt[a[r]]) {
       --f[a[l]];
       ++l;
     }
     ans += r - l + 1;
   }
 
-  println("{}", ans);
+  cout << ans << '\n';
 }
 
 int main() { // {{{

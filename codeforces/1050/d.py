@@ -5,7 +5,7 @@ from collections import Counter, defaultdict, deque
 from functools import cache, cmp_to_key, reduce
 from heapq import heapify, heappop, heappush
 from itertools import accumulate, combinations, permutations, product
-from math import comb, gcd, inf, isqrt, lcm, perm
+from math import ceil, comb, floor, gcd, inf, isqrt, lcm, perm
 from string import ascii_lowercase, ascii_uppercase
 
 sys.setrecursionlimit(10**4)
@@ -22,7 +22,20 @@ def solve():
     n = int(input())
     a = list(map(int, input().split()))
 
-    print(a)
+    odds = [e for e in a if (e & 1)]
+
+    if not odds:
+        print(0)
+        return
+
+    ans = sum(e for e in a if not (e & 1))
+
+    odds.sort(reverse=True)
+
+    for i in range(ceil(len(odds) / 2)):
+        ans += odds[i]
+
+    print(ans)
 
 
 # {{{
