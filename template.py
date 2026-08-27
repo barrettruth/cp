@@ -5,7 +5,7 @@ from collections import Counter, defaultdict, deque
 from functools import cache, cmp_to_key, reduce
 from heapq import heapify, heappop, heappush
 from itertools import accumulate, combinations, permutations, product
-from math import comb, gcd, inf, isqrt, lcm, perm
+from math import ceil, comb, floor, gcd, inf, isqrt, lcm, perm
 from string import ascii_lowercase, ascii_uppercase
 
 sys.setrecursionlimit(10**4)
@@ -22,8 +22,7 @@ def solve():
     pass
 
 
-# {{{
-def main():
+def main():  # {{{
     for _ in range(int(input())):
         solve()
 
