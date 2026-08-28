@@ -10,6 +10,7 @@
 #include <climits>
 #include <cmath>
 #include <complex>
+#include <cstddef>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -52,6 +53,38 @@ namespace rs = std::ranges;
 #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
 #endif
 #endif
+
+template <typename T>
+using vec = std::vector<T>;
+
+template <typename T, std::size_t N>
+using arr = std::array<T, N>;
+
+template <typename T, typename C = std::less<T>>
+using pq = std::priority_queue<T, std::vector<T>, C>;
+
+template <typename T, typename C = std::less<T>>
+using mset = std::multiset<T, C>;
+
+template <typename T, typename H = std::hash<T>>
+using uset = std::unordered_set<T, H>;
+
+template <typename K, typename V, typename H = std::hash<K>>
+using umap = std::unordered_map<K, V, H>;
+
+template <typename... Ts>
+  requires(sizeof...(Ts) >= 2)
+[[nodiscard]] constexpr auto min(Ts&&... xs) {
+  using T = std::common_type_t<std::remove_cvref_t<Ts>...>;
+  return std::ranges::min({static_cast<T>(xs)...});
+}
+
+template <typename... Ts>
+  requires(sizeof...(Ts) >= 2)
+[[nodiscard]] constexpr auto max(Ts&&... xs) {
+  using T = std::common_type_t<std::remove_cvref_t<Ts>...>;
+  return std::ranges::max({static_cast<T>(xs)...});
+}
 
 using namespace std;
 
