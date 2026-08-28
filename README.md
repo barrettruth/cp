@@ -8,5 +8,5 @@ a collection of my competitive programming solutions categorized as follows:
 > GitHub is maintained as a read-only mirror.
 
 - `/kattis`: a few ICPC problems from UVA's "practices"
-- `/codeforces`: codeforces contests, including every division 4 round
+- `/codeforces`: codeforces contests
 - `/cses`: ~100 basic cses problems
