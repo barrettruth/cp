@@ -1,4 +1,5 @@
 # {{{
+import os
 import sys
 from bisect import bisect_left, bisect_right, insort
 from collections import Counter, defaultdict, deque
@@ -11,8 +12,12 @@ from string import ascii_lowercase, ascii_uppercase
 sys.setrecursionlimit(10**4)
 
 
+LOCAL = "LOCAL" in os.environ
+
+
 def db(*args):
-    print(*args, file=sys.stderr)
+    if LOCAL:
+        print(*args, file=sys.stderr)
 
 
 # }}}

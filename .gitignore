@@ -2,6 +2,7 @@
 .direnv
 *.debug
 *.dSYM
+*.judge
 *.run
 *.su
 build
