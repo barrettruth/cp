@@ -103,6 +103,13 @@ template <typename T>
 constexpr T MAX = std::numeric_limits<T>::max();
 #endif
 
+void YES() { std::println("YES"); }
+void NO() { std::println("NO"); }
+void Yes() { std::println("Yes"); }
+void No() { std::println("No"); }
+void yes() { std::println("yes"); }
+void no() { std::println("no"); }
+
 #ifdef LOCAL
 #define db(...) std::print(__VA_ARGS__)
 #define dbln(...) std::println(__VA_ARGS__)
