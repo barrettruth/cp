@@ -15,15 +15,33 @@
       forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
     in
     {
-      devShells = forAllSystems (pkgs: {
-        default = (pkgs.mkShell.override { stdenv = pkgs.gcc14Stdenv; }) {
+      devShells = forAllSystems (
+        pkgs:
+        let
+          isLinux = pkgs.stdenv.hostPlatform.isLinux;
+          clangTools = pkgs.llvmPackages.clang-tools;
+          gcc = pkgs.gcc14Stdenv.cc;
+          clangd = pkgs.writeShellScriptBin "clangd" ''
+            exec ${clangTools}/bin/clangd '--query-driver=${gcc}/bin/g++' "$@"
+          '';
           packages = [
             pkgs.just
             pkgs.coreutils
             pkgs.python313
+            clangd
+            clangTools
           ]
-          ++ pkgs.lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.gdb;
-        };
-      });
+          ++ pkgs.lib.optional isLinux pkgs.gdb;
+        in
+        {
+          default = (pkgs.mkShell.override { stdenv = pkgs.gcc14Stdenv; }) {
+            name = "cp-gcc";
+            inherit packages;
+            CXX_STD = "c++17";
+            CXX_HARDENING_FLAGS = "-D_GLIBCXX_DEBUG -D_GLIBCXX_ASSERTIONS";
+            CXX_SANITIZER_FLAGS = pkgs.lib.optionalString isLinux "-fsanitize=address,undefined";
+          };
+        }
+      );
     };
 }
