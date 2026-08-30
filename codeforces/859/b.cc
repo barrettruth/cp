@@ -1,80 +1,76 @@
-#include <bits/stdc++.h>  // {{{
+#include <bits/stdc++.h> // {{{
 
-// https://codeforces.com/blog/entry/96344
+#if __cplusplus >= 202002L && defined(__cpp_lib_ranges)
+namespace rv = std::views;
+namespace rs = std::ranges;
+#endif
 
-#pragma GCC optimize("O2,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+template <typename T>
+using vec = std::vector<T>;
+
+template <typename T, std::size_t N>
+using arr = std::array<T, N>;
+
+template <typename T, typename C = std::less<T>>
+using pq = std::priority_queue<T, std::vector<T>, C>;
+
+template <typename T, typename C = std::less<T>>
+using mset = std::multiset<T, C>;
+
+template <typename T, typename H = std::hash<T>>
+using uset = std::unordered_set<T, H>;
+
+template <typename K, typename V, typename H = std::hash<K>>
+using umap = std::unordered_map<K, V, H>;
+
+template <typename T>
+using cvrefless_t = std::remove_cv_t<std::remove_reference_t<T>>;
+
+template <typename T, typename U, typename... Ts>
+[[nodiscard]] constexpr auto min(T&& x, U&& y, Ts&&... xs) {
+  using R = std::common_type_t<cvrefless_t<T>, cvrefless_t<U>, cvrefless_t<Ts>...>;
+  const std::initializer_list<R> values{
+      static_cast<R>(std::forward<T>(x)), static_cast<R>(std::forward<U>(y)),
+      static_cast<R>(std::forward<Ts>(xs))...};
+  return std::min(values);
+}
+
+template <typename T, typename U, typename... Ts>
+[[nodiscard]] constexpr auto max(T&& x, U&& y, Ts&&... xs) {
+  using R = std::common_type_t<cvrefless_t<T>, cvrefless_t<U>, cvrefless_t<Ts>...>;
+  const std::initializer_list<R> values{
+      static_cast<R>(std::forward<T>(x)), static_cast<R>(std::forward<U>(y)),
+      static_cast<R>(std::forward<Ts>(xs))...};
+  return std::max(values);
+}
 
 using namespace std;
 
-template <typename T>
-[[nodiscard]] static T MIN() {
-  return std::numeric_limits<T>::min();
-}
+using i32 = int32_t;
+using u32 = uint32_t;
+using i64 = int64_t;
+using u64 = uint64_t;
+using f64 = double;
+using f128 = long double;
 
 template <typename T>
-[[nodiscard]] static T MAX() {
-  return std::numeric_limits<T>::max();
-}
+constexpr T MIN = std::numeric_limits<T>::lowest();
 
 template <typename T>
-[[nodiscard]] static T sc(auto&& x) {
-  return static_cast<T>(x);
-}
+constexpr T MAX = std::numeric_limits<T>::max();
 
-template <typename T>
-[[nodiscard]] static T sz(auto&& x) {
-  return static_cast<T>(x.size());
-}
+void YES() { std::cout << "YES\n"; }
+void Yes() { std::cout << "Yes\n"; }
+void yes() { std::cout << "yes\n"; }
+void NO() { std::cout << "NO\n"; }
+void No() { std::cout << "No\n"; }
+void no() { std::cout << "no\n"; }
 
-#define prln(...) std::println(__VA_ARGS__)
+#if defined(__cpp_lib_print) && __cpp_lib_print >= 202207L
 #define pr(...) std::print(__VA_ARGS__)
-
-#ifdef LOCAL
-#define dbgln(...) std::println(__VA_ARGS__)
-#define dbg(...) std::print(__VA_ARGS__)
+#define prln(...) std::println(__VA_ARGS__)
 #endif
-
-inline static void NO() {
-  prln("NO");
-}
-
-inline static void YES() {
-  prln("YES");
-}
-
-using ll = long long;
-using ld = long double;
-template <typename T>
-using ve = std::vector<T>;
-template <typename T, size_t N>
-using ar = std::array<T, N>;
-template <typename T1, typename T2>
-using pa = std::pair<T1, T2>;
-template <typename... Ts>
-using tu = std::tuple<Ts...>;
-template <typename... Ts>
-using dq = std::deque<Ts...>;
-template <typename... Ts>
-using qu = std::queue<Ts...>;
-template <typename... Ts>
-using pq = std::priority_queue<Ts...>;
-template <typename... Ts>
-using st = std::stack<Ts...>;
-auto lb = [](auto... args) {
-  return std::lower_bound(args...);
-};
-auto ub = [](auto... args) {
-  return std::upper_bound(args...);
-};
-
-#define ff first
-#define ss second
-#define eb emplace_back
-#define pb push_back
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (x).rbegin(), (x).rend()
-//  }}}
+// }}}
 
 void solve() {
   int n;
@@ -87,17 +83,23 @@ void solve() {
   if (mihai > bianca) YES(); else NO();
 }
 
-int main() {  // {{{
-  cin.tie(nullptr)->sync_with_stdio(false);
-  cin.exceptions(cin.failbit);
-
-  int t = 1;
-  cin >> t;
-
-  while (t--) {
+int main() { // {{{
+  std::cin.exceptions(std::cin.failbit);
+#ifdef LOCAL
+  std::cerr.rdbuf(std::cout.rdbuf());
+  std::cout.setf(std::ios::unitbuf);
+  std::cerr.setf(std::ios::unitbuf);
+#else
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(nullptr);
+#endif
+  u32 tc = 1;
+  std::cin >> tc;
+  for (u32 t = 0; t < tc; ++t) {
     solve();
   }
-
   return 0;
 }
 // }}}
+
+// vim: foldmethod=marker foldlevel=0
