@@ -104,10 +104,10 @@ constexpr T MAX = std::numeric_limits<T>::max();
 #endif
 
 void YES() { std::println("YES"); }
-void NO() { std::println("NO"); }
 void Yes() { std::println("Yes"); }
-void No() { std::println("No"); }
 void yes() { std::println("yes"); }
+void NO() { std::println("NO"); }
+void No() { std::println("No"); }
 void no() { std::println("no"); }
 
 #ifdef LOCAL
@@ -120,16 +120,53 @@ void no() { std::println("no"); }
 // }}}
 
 void solve() {
-  u32 n, q;
-  cin >> n >> q;
+  u32 n, m;
+  cin >> n >> m;
 
-  string s;
-  cin >> s;
-
-  u32 l, r, k;
-  for (u32 i = 0; i < q; ++i) {
-    cin >> l >> r >> k;
+  vec<i64> F(m + 2);
+  i64 sum = 0;
+  for (u32 i = 0; i < n; ++i) {
+    u32 a;
+    cin >> a;
+    ++F[a];
+    sum += a;
   }
+
+  auto suf = F;
+  for (u32 i = m; i > 0; --i) {
+    suf[i] += suf[i + 1];
+  }
+
+  vec<i64> ans;
+  for (u32 p = 2; p < m; p *= 2) {
+    i64 best = 0;
+
+    for (u32 x = 1; x <= m; ++x) {
+      i64 cnt = 0;
+      u32 q = min(p - 1, m / x);
+
+      for (u32 i = 1; i <= q; ++i) {
+        cnt += suf[i * x];
+      }
+
+      if (x <= m / p) {
+        cnt += F[p * x];
+      }
+
+      best = max(best, cnt);
+    }
+
+    ans.push_back(best);
+  }
+
+  while (ans.size() < m) {
+    ans.push_back(sum);
+  }
+
+  for (u32 i = 0; i < m; ++i) {
+    print("{} ", ans[i]);
+  }
+  println();
 }
 
 int main() { // {{{

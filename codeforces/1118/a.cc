@@ -104,10 +104,10 @@ constexpr T MAX = std::numeric_limits<T>::max();
 #endif
 
 void YES() { std::println("YES"); }
-void NO() { std::println("NO"); }
 void Yes() { std::println("Yes"); }
-void No() { std::println("No"); }
 void yes() { std::println("yes"); }
+void NO() { std::println("NO"); }
+void No() { std::println("No"); }
 void no() { std::println("no"); }
 
 #ifdef LOCAL
@@ -120,16 +120,15 @@ void no() { std::println("no"); }
 // }}}
 
 void solve() {
-  u32 n, q;
-  cin >> n >> q;
+  u32 n;
+  cin >> n;
 
-  string s;
-  cin >> s;
-
-  u32 l, r, k;
-  for (u32 i = 0; i < q; ++i) {
-    cin >> l >> r >> k;
+  vec<i64> a(n);
+  for (auto& x : a) {
+    cin >> x;
   }
+
+  println("{}", gcd(a.front(), a.back()));
 }
 
 int main() { // {{{
