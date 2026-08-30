@@ -1,86 +1,87 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // {{{
 
-// https://codeforces.com/blog/entry/96344
+#if __cplusplus >= 202002L && defined(__cpp_lib_ranges)
+namespace rv = std::views;
+namespace rs = std::ranges;
+#endif
 
-#pragma GCC optimize("O2,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
+template <typename T>
+using vec = std::vector<T>;
+
+template <typename T, std::size_t N>
+using arr = std::array<T, N>;
+
+template <typename T, typename C = std::less<T>>
+using pq = std::priority_queue<T, std::vector<T>, C>;
+
+template <typename T, typename C = std::less<T>>
+using mset = std::multiset<T, C>;
+
+template <typename T, typename H = std::hash<T>>
+using uset = std::unordered_set<T, H>;
+
+template <typename K, typename V, typename H = std::hash<K>>
+using umap = std::unordered_map<K, V, H>;
+
+template <typename T>
+using cvrefless_t = std::remove_cv_t<std::remove_reference_t<T>>;
+
+template <typename T, typename U, typename... Ts>
+[[nodiscard]] constexpr auto min(T&& x, U&& y, Ts&&... xs) {
+  using R = std::common_type_t<cvrefless_t<T>, cvrefless_t<U>, cvrefless_t<Ts>...>;
+  const std::initializer_list<R> values{
+      static_cast<R>(std::forward<T>(x)), static_cast<R>(std::forward<U>(y)),
+      static_cast<R>(std::forward<Ts>(xs))...};
+  return std::min(values);
+}
+
+template <typename T, typename U, typename... Ts>
+[[nodiscard]] constexpr auto max(T&& x, U&& y, Ts&&... xs) {
+  using R = std::common_type_t<cvrefless_t<T>, cvrefless_t<U>, cvrefless_t<Ts>...>;
+  const std::initializer_list<R> values{
+      static_cast<R>(std::forward<T>(x)), static_cast<R>(std::forward<U>(y)),
+      static_cast<R>(std::forward<Ts>(xs))...};
+  return std::max(values);
+}
 
 using namespace std;
 
-template <typename... Args>
-void dbg(std::string const &str, Args &&...args) {
-  std::cout << std::vformat(str, std::make_format_args(args...));
-}
+using i32 = int32_t;
+using u32 = uint32_t;
+using i64 = int64_t;
+using u64 = uint64_t;
+using f64 = double;
+using f128 = long double;
 
 template <typename T>
-void dbg(T const &t) {
-  std::cout << t;
-}
-
-template <std::ranges::range T>
-void dbgln(T const &t) {
-  if constexpr (std::is_convertible_v<T, char const *>) {
-    std::cout << t << '\n';
-  } else {
-    for (auto const &e : t) {
-      std::cout << e << ' ';
-    }
-    std::cout << '\n';
-  }
-}
-
-void dbgln() {
-  std::cout << '\n';
-}
-
-template <typename... Args>
-void dbgln(std::string const &str, Args &&...args) {
-  dbg(str, std::forward<Args>(args)...);
-  cout << '\n';
-}
+constexpr T MIN = std::numeric_limits<T>::lowest();
 
 template <typename T>
-void dbgln(T const &t) {
-  dbg(t);
-  cout << '\n';
-}
+constexpr T MAX = std::numeric_limits<T>::max();
 
-template <typename T>
-constexpr T MIN = std::numeric_limits<T>::min();
+void YES() { std::cout << "YES\n"; }
+void Yes() { std::cout << "Yes\n"; }
+void yes() { std::cout << "yes\n"; }
+void NO() { std::cout << "NO\n"; }
+void No() { std::cout << "No\n"; }
+void no() { std::cout << "no\n"; }
 
-template <typename T>
-constexpr T MAX = std::numeric_limits<T>::min();
+#if defined(__cpp_lib_print) && __cpp_lib_print >= 202207L
+#define pr(...) std::print(__VA_ARGS__)
+#define prln(...) std::println(__VA_ARGS__)
+#endif
+// }}}
 
-template <typename T>
-static T sc(auto &&x) {
-  return static_cast<T>(x);
-}
-
-#define ff first
-#define ss second
-#define eb emplace_back
-#define ll long long
-#define ld long double
-#define vec vector
-#define endl '\n'
-
-#define all(x) (x).begin(), (x).end()
-#define rall(x) (r).rbegin(), (x).rend()
-#define sz(x) static_cast<int>((x).size())
 #define FOR(a, b, c) for (int(a) = (b); (a) < (c); ++(a))
-#define ROF(a, b, c) for (int(a) = (b); (a) > (c); --(a))
-
-std::random_device rd;
-std::mt19937 gen(rd());
 
 void solve() {
   int n, q;
   cin >> n >> q;
-  ll A = 0;
-  vec<ll> prefix;
+  i64 A = 0;
+  vec<i64> prefix;
   prefix.push_back(0);
   FOR(i, 0, n) {
-    ll x;
+    i64 x;
     cin >> x;
     A += x;
     prefix.push_back(A);
@@ -90,7 +91,7 @@ void solve() {
   // c_k = [a_k, a_k+1, ..., a_n ,a_1, ..., ak-1]
   // [a_2, a_0, a_1]
   // i = 2
-  auto shift_sum = [&](int k, int i) -> ll {
+  auto shift_sum = [&](int k, int i) -> i64 {
     if (i == -1)
       return 0;
 
@@ -102,7 +103,7 @@ void solve() {
   };
 
   FOR(i, 0, q) {
-    ll l, r;
+    i64 l, r;
     cin >> l >> r;
     --l;
     --r;
@@ -111,7 +112,7 @@ void solve() {
 
     l = l % n, r = r % n;
 
-    ll ans;
+    i64 ans;
     if (I != J)
       ans =
           max(0LL, (J - I - 1) * A) + A - shift_sum(I, l - 1) + shift_sum(J, r);
@@ -125,19 +126,27 @@ void solve() {
         ans = prefix[n] - prefix[shifted_l] + prefix[shifted_r + 1];
     }
 
-    dbgln(ans);
+    prln("{}", ans);
   }
 }
 
-int main() {
-  cin.tie(nullptr)->sync_with_stdio(false);
-
-  int t = 1;
-  cin >> t;
-
-  while (t--) {
+int main() { // {{{
+  std::cin.exceptions(std::cin.failbit);
+#ifdef LOCAL
+  std::cerr.rdbuf(std::cout.rdbuf());
+  std::cout.setf(std::ios::unitbuf);
+  std::cerr.setf(std::ios::unitbuf);
+#else
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(nullptr);
+#endif
+  u32 tc = 1;
+  std::cin >> tc;
+  for (u32 t = 0; t < tc; ++t) {
     solve();
   }
-
   return 0;
 }
+// }}}
+
+// vim: foldmethod=marker foldlevel=0
