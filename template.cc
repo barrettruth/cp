@@ -66,16 +66,76 @@ void NO() { std::cout << "NO\n"; }
 void No() { std::cout << "No\n"; }
 void no() { std::cout << "no\n"; }
 
+template <typename T, typename = void>
+struct print_is_range : std::false_type {};
+
+template <typename T>
+struct print_is_range<
+    T, std::void_t<decltype(std::begin(std::declval<const T&>())),
+                   decltype(std::end(std::declval<const T&>()))>> : std::true_type {};
+
+template <typename T>
+void write_one(std::ostream& out, const T& value);
+
+template <typename T, typename U>
+void write_one(std::ostream& out, const std::pair<T, U>& value) {
+  out << '(';
+  write_one(out, value.first);
+  out << ", ";
+  write_one(out, value.second);
+  out << ')';
+}
+
+template <typename T>
+void write_one(std::ostream& out, const T& value) {
+  constexpr bool is_string = std::is_convertible_v<const T&, std::string_view>;
+  if constexpr (print_is_range<T>::value && !is_string) {
+    out << '[';
+    bool first = true;
+    for (const auto& element : value) {
+      if (!first) out << ", ";
+      first = false;
+      write_one(out, element);
+    }
+    out << ']';
+  } else {
+    out << value;
+  }
+}
+
+template <typename... Ts>
+void write_many(std::ostream& out, Ts&&... xs) {
+  if constexpr (sizeof...(Ts) > 0) {
+    bool first = true;
+    auto write = [&](auto&& x) {
+      if (!first) out << ' ';
+      first = false;
+      write_one(out, x);
+    };
+    (write(std::forward<Ts>(xs)), ...);
+  }
+}
+
+#if defined(__cpp_lib_print) && __cpp_lib_print >= 202207L
+#define pr(...) std::print(__VA_ARGS__)
+#define prln(...) std::println(__VA_ARGS__)
+#else
+template <typename... Ts>
+void pr(Ts&&... xs) {
+  write_many(std::cout, std::forward<Ts>(xs)...);
+}
+
+template <typename... Ts>
+void prln(Ts&&... xs) {
+  pr(std::forward<Ts>(xs)...);
+  std::cout << '\n';
+}
+#endif
+
 #ifdef LOCAL
 template <typename... Ts>
 void debug_write(Ts&&... xs) {
-  bool first = true;
-  auto write = [&](auto&& x) {
-    if (!first) std::cerr << ' ';
-    first = false;
-    std::cerr << std::forward<decltype(x)>(x);
-  };
-  (write(std::forward<Ts>(xs)), ...);
+  write_many(std::cerr, std::forward<Ts>(xs)...);
 }
 
 template <typename... Ts>
