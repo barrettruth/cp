@@ -32,15 +32,19 @@
             clangTools
           ]
           ++ pkgs.lib.optional isLinux pkgs.gdb;
+          mkCpShell =
+            cxxStd:
+            (pkgs.mkShell.override { stdenv = pkgs.gcc14Stdenv; }) {
+              name = "cp-gcc";
+              inherit packages;
+              CXX_STD = cxxStd;
+              CXX_HARDENING_FLAGS = "-D_GLIBCXX_DEBUG -D_GLIBCXX_ASSERTIONS";
+              CXX_SANITIZER_FLAGS = pkgs.lib.optionalString isLinux "-fsanitize=address,undefined";
+            };
         in
         {
-          default = (pkgs.mkShell.override { stdenv = pkgs.gcc14Stdenv; }) {
-            name = "cp-gcc";
-            inherit packages;
-            CXX_STD = "c++17";
-            CXX_HARDENING_FLAGS = "-D_GLIBCXX_DEBUG -D_GLIBCXX_ASSERTIONS";
-            CXX_SANITIZER_FLAGS = pkgs.lib.optionalString isLinux "-fsanitize=address,undefined";
-          };
+          default = mkCpShell "c++17";
+          codeforces = mkCpShell "c++23";
         }
       );
     };

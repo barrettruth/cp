@@ -9,3 +9,4 @@ build
 io
 .clangd
 .clang-format
+!codeforces/.envrc
