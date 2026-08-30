@@ -1,10 +1,5 @@
 #include <bits/stdc++.h>  // {{{
 
-// https://codeforces.com/blog/entry/96344
-
-#pragma GCC optimize("O2,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
-
 using namespace std;
 
 template <typename T>
@@ -13,13 +8,13 @@ constexpr T MIN = std::numeric_limits<T>::min();
 template <typename T>
 constexpr T MAX = std::numeric_limits<T>::max();
 
-template <typename T>
-[[nodiscard]] static T sc(auto&& x) {
+template <typename T, typename U>
+[[nodiscard]] static T sc(U&& x) {
   return static_cast<T>(x);
 }
 
-template <typename T>
-[[nodiscard]] static T sz(auto&& x) {
+template <typename T, typename U>
+[[nodiscard]] static T sz(U&& x) {
   return static_cast<T>(x.size());
 }
 

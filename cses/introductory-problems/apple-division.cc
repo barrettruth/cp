@@ -1,10 +1,5 @@
 #include <bits/stdc++.h>  // {{{
 
-// https://codeforces.com/blog/entry/96344
-
-#pragma GCC optimize("O2,unroll-loops")
-#pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
-
 using namespace std;
 
 using i32 = int32_t;
@@ -19,13 +14,6 @@ using f128 = long double;
 #define ff first
 #define ss second
 
-#ifdef LOCAL
-#define db(...) std::print(__VA_ARGS__)
-#define dbln(...) std::println(__VA_ARGS__)
-#else
-#define db(...)
-#define dbln(...)
-#endif
 //  }}}
 
 void solve() {
