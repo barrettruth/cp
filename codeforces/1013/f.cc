@@ -1,8 +1,8 @@
 #include <bits/stdc++.h> // {{{
 
 #if __cplusplus >= 202002L && defined(__cpp_lib_ranges)
-namespace rv = std::views;
-namespace rs = std::ranges;
+namespace rng = std::ranges;
+namespace rv = rng::views;
 #endif
 
 template <typename T>
